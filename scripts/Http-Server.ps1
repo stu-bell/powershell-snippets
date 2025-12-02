@@ -1,4 +1,8 @@
 <#
+.NOTES
+	RUNNING SCRIPTS CARRIES RISK. ALWAYS REVIEW SCRIPTS BEFORE RUNNING THEM ON YOUR SYSTEM.
+	IF IN DOUBT, COPY AND PASTE THE SCRIPT INTO A SERVICE LIKE CHATGPT AND ASK IF IT COULD BE HARMFUL.
+
 .SYNOPSIS
     HTTP file server. Serves current working directory to the local network.
 
@@ -13,37 +17,49 @@
     To remove firewall rule once done:
     Get-NetFirewallRule | Where-Object { $_.DisplayName -like "LocalHTTPServerPowershell*" } | Remove-NetFirewallRule
 
-.PARAMETER port
+.PARAMETER DirectoryPath
+    Directory to serve. Defaults to current working directory
+
+.PARAMETER Port
     Port number to use
 
-.PARAMETER localhost
-    This option only serves to localhost and not the local network. No changes to firewall rules.
+.PARAMETER HostOnNet
+    Host to your network, not just localhost
 
-.PARAMETER stoproute
-    Optional route to stop the server from the client. Eg if stoproute=STOP, navigating to http://<ipaddress>:<port>/STOP will stop the server
+.PARAMETER StopRoute
+    Optional route to stop the server from the client. Eg if StopRoute=STOP, navigating to http://<ipaddress>:<port>/STOP will stop the server
 
 .NOTES
-    Author: github.com/stu-bell
-    Date: 2025-01-14
-    Version: 0.4
+	Author      : Stuart Bell
+	License     : MIT
+	Repository  : https://github.com/stu-bell/powershell-scripts
+
+.LINK
+	https://github.com/stu-bell/powershell-scripts
 #>
 
-#Requires -RunAsAdministrator
-# To run as admin: https://learn.microsoft.com/en-us/windows/terminal/faq#how-do-i-run-a-shell-in-windows-terminal-in-administrator-mode
-# Set-ExecutionPolicy -Scope CurrentUser Unrestricted
-
 param(
+    [Parameter(HelpMessage="Directory to serve")]
+    [string]$DirectoryPath=".",
     [Parameter(HelpMessage="Port number to use")]
-    [int]$port = 8000,
-    [Parameter(HelpMessage="Use localhost instead of serving on the local network")]
-    [switch]$localhost = $false,
+    [int]$Port = 8000,
+    [Parameter(HelpMessage="Serve on your network. Otherwise just serve on localhost")]
+    [switch]$HostOnNet = $false,
     [Parameter(HelpMessage="Optional route to stop the server")]
-    [string]$stoproute
+    [string]$StopRoute
 )
 
-if ($localhost) {
-    $localIP = "localhost"
-} else {
+# resolve relative file paths
+$DirectoryPath = (Resolve-Path $DirectoryPath).Path
+
+if ($HostOnNet) {
+# Check we have admin
+    $IsAdmin = (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
+    if (-not $IsAdmin){
+        Write-Error "Error: to use option -HostOnNet, script must be run as administrator."
+        exit
+    }
+
     # Get host's IP address
     $localIP = Get-NetIPAddress -AddressFamily IPv4 |
     Where-Object { $_.IPAddress -like "192.168.*" } |
@@ -52,11 +68,13 @@ if ($localhost) {
     # Open the port for local network only
     $ruleName = "LocalHTTPServerPowershell" 
     Write-Host "Adding firewall rule $ruleName"
-    $null = New-NetFirewallRule -LocalPort ${port} -DisplayName $ruleName -Direction Inbound -Protocol TCP -LocalAddress $localIP -RemoteAddress 192.168.1.0/24 -Action Allow
+    $null = New-NetFirewallRule -LocalPort ${Port} -DisplayName $ruleName -Direction Inbound -Protocol TCP -LocalAddress $localIP -RemoteAddress 192.168.1.0/24 -Action Allow
+} else {
+    $localIP = "localhost"
 }
 
 # set up a drive for the root directory
-$Root = $PWD.Path
+$Root = $DirectoryPath
 $null = New-PSDrive -Name FileServer -PSProvider FileSystem -Root $Root
 
 # needed for MIME types
@@ -64,15 +82,15 @@ $null = [System.Reflection.Assembly]::LoadWithPartialName("System.Web")
 
 # Create and start listener
 $listener = New-Object System.Net.HttpListener
-$listener.Prefixes.Add("http://${localIP}:${port}/")
+$listener.Prefixes.Add("http://${localIP}:${Port}/")
 $listener.Start()
 
-Write-Host "Server running: http://${localIP}:${port}"
+Write-Host "Server running: http://${localIP}:${Port}"
 
 # Route to stop server remotely
-if ($PSBoundParameters.ContainsKey('stoproute')) {
-    $stoproute = if ($stoproute[0] -ne '/') {'/' + $stoproute } else { $stoproute }
-    Write-Host "Stop server at: http://${localIP}:${port}${stoproute}"
+if ($PSBoundParameters.ContainsKey('StopRoute')) {
+    $StopRoute = if ($StopRoute[0] -ne '/') {'/' + $StopRoute } else { $StopRoute }
+    Write-Host "Stop server at: http://${localIP}:${Port}${StopRoute}"
 }
 
 try {
@@ -88,7 +106,7 @@ try {
             # https://learn.microsoft.com/en-us/dotnet/api/system.net.httplistenerrequest
             
             # URL path to stop the server
-            if ($PSBoundParameters.ContainsKey('stoproute') -and $context.Request.Url.LocalPath -eq $stoproute) {
+            if ($PSBoundParameters.ContainsKey('StopRoute') -and $context.Request.Url.LocalPath -eq $StopRoute) {
                 Write-Host "Stop request received"
                 break
             }
@@ -134,7 +152,7 @@ try {
 } finally {
     $listener.Stop()
     Remove-PSDrive FileServer
-    if (-not $localhost) {
+    if ($HostOnNet) {
         Remove-NetFirewallRule -DisplayName $ruleName
     }
     Write-Host "`nServer stopped"
