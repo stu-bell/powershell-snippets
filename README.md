@@ -26,7 +26,8 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 > Note that there should be a space between -File and the start of your file path
 
-![Screenshot of shorcut properties](./imgs/ShortcutProperties.png)
+<!-- ![Screenshot of shorcut properties](./imgs/ShortcutProperties.png) -->
+<img src="./imgs/ShortcutProperties.png" width="300">
 
 4. Clicking the shortcut you've just created will execute the script. Clicking the original script file will allow you to modify the script text. 
 
