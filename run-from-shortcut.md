@@ -2,7 +2,8 @@
 
 These instructions detail how to create a Windows Explorer shortcut to launch Powershell scripts. 
 
-> ALWAYS REVIEW SCRIPTS WRITTEN BY OTHERS BEFORE RUNNING THEM ON YOUR SYSTEM. 
+> RUNNING SCRIPTS CARRIES RISK. ALWAYS REVIEW SCRIPTS BEFORE RUNNING THEM ON YOUR SYSTEM.
+> IF IN DOUBT, COPY AND PASTE THE SCRIPT INTO A SERVICE LIKE CHATGPT AND ASK IF IT COULD BE HARMFUL.
 
 1. Save your script as a file and ensure the file name ends with file extension .ps1
 

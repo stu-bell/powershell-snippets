@@ -1,17 +1,21 @@
 <#
+.NOTES
+    RUNNING SCRIPTS CARRIES RISK. ALWAYS REVIEW SCRIPTS BEFORE RUNNING THEM ON YOUR SYSTEM.
+    IF IN DOUBT, COPY AND PASTE THE SCRIPT INTO A SERVICE LIKE CHATGPT AND ASK IF IT COULD BE HARMFUL.
+
 .SYNOPSIS
-Restarts a specific device in Windows Device Manager.
-Requires Administrator Privileges.
+    Restarts a specific device in Windows Device Manager.
+    Requires Administrator Privileges.
 
 .DESCRIPTION
-Locates a device by its friendly name, disables and re-enables it to
-perform a soft restart, and reports the result.
+    Locates a device by its friendly name, disables and re-enables it to
+    perform a soft restart, and reports the result.
 
 .PARAMETER DeviceName
-Name of the device to restart, as shown in Device Manager.
+    Name of the device to restart, as shown in Device Manager.
 
 .PARAMETER NonInteractive
-Prevents prompts for user input. Inteded for automated execution.
+    Prevents prompts for user input. Inteded for automated execution.
 
 .NOTES
     Author      : Stuart Bell
