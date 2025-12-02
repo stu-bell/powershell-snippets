@@ -20,11 +20,11 @@
 .NOTES
     Author      : Stuart Bell
     License     : MIT
-    Repository  : https://github.com/stu-bell/powershell-snippets
+    Repository  : https://github.com/stu-bell/powershell-scripts
     Inspired by : Thibaut's answer to https://learn.microsoft.com/en-us/answers/questions/2339429/marvell-avastar-wireless-ac-network-controller-alw
 
 .LINK
-    https://github.com/stu-bell/powershell-snippets
+    https://github.com/stu-bell/powershell-scripts
 #>
 param(
  [string]

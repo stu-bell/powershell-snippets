@@ -7,7 +7,7 @@
     Demo of a PowerShell script requesting Administrator privileges
 
 .DESCRIPTION
-    Demonstration PowerShell snippet that checks if the process is running with Administrator privileges, and if not, restarts itself requesting Administrator privileges, and passes through the original arguments
+    Demonstration PowerShell script that checks if the process is running with Administrator privileges, and if not, restarts itself requesting Administrator privileges, and passes through the original arguments
 
 .PARAMETER Text
     The text string to be displayed by the demo script
@@ -15,10 +15,10 @@
 .NOTES
     Author      : Stuart Bell
     License     : MIT
-    Repository  : https://github.com/stu-bell/powershell-snippets
+    Repository  : https://github.com/stu-bell/powershell-scripts
 
 .LINK
-    https://github.com/stu-bell/powershell-snippets
+    https://github.com/stu-bell/powershell-scripts
 #>
 param(
  [string]

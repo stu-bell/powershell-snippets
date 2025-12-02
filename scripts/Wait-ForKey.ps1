@@ -1,6 +1,6 @@
 <#
 .NOTES
-    RUNNING SCRIPTS CARRIES RISKS. ALWAYS REVIEW SCRIPTS BEFORE RUNNING THEM ON YOUR SYSTEM.
+    RUNNING SCRIPTS CARRIES RISK. ALWAYS REVIEW SCRIPTS BEFORE RUNNING THEM ON YOUR SYSTEM.
     IF IN DOUBT, COPY AND PASTE THE SCRIPT INTO A SERVICE LIKE CHATGPT AND ASK IF IT COULD BE HARMFUL.
 
 .SYNOPSIS
@@ -18,10 +18,10 @@
 .NOTES
     Author      : Stuart Bell
     License     : MIT
-    Repository  : https://github.com/stu-bell/powershell-snippets
+    Repository  : https://github.com/stu-bell/powershell-scripts
 
 .LINK
-    https://github.com/stu-bell/powershell-snippets
+    https://github.com/stu-bell/powershell-scripts
 #>
 param(
  [switch]
