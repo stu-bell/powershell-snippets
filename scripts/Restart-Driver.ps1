@@ -16,6 +16,7 @@ Prevents prompts for user input. Inteded for automated execution.
     Author      : Stuart Bell
     License     : MIT
     Repository  : https://github.com/stu-bell/powershell-snippets
+    Inspired by : Thibaut's answer to https://learn.microsoft.com/en-us/answers/questions/2339429/marvell-avastar-wireless-ac-network-controller-alw
 
 .LINK
     https://github.com/stu-bell/powershell-snippets
