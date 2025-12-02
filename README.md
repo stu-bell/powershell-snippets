@@ -7,5 +7,5 @@ For more documentation on running Powershell scripts, see: [Microsoft Learn | Ho
 
 # Run Powershell scripts from a shortcut
 
-[Instructions here](./run-from-shortcut.md) 
+[Instructions to run Powershell scripts from a shortcut are here](./run-from-shortcut.md) 
 

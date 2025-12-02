@@ -6,10 +6,9 @@ These instructions detail how to create a Windows Explorer shortcut to launch Po
 > IF IN DOUBT, COPY AND PASTE THE SCRIPT INTO A SERVICE LIKE CHATGPT AND ASK IF IT COULD BE HARMFUL.
 
 1. Save your script as a file and ensure the file name ends with file extension .ps1
+If you can't see the file extension for file names, view them by following [these instructions](https://support.microsoft.com/en-gb/windows/common-file-name-extensions-in-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01).
 
-If you can't see the file extension for file names, view them by following [these instructions](https://support.microsoft.com/en-gb/windows/common-file-name-extensions-in-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01)
-
-1. Right click the powershell ps1 file in Windows Explorer > Create Shortcut (or Right click > Show More Options > Create Shortcut)
+2. Right click the powershell ps1 file in Windows Explorer > Create Shortcut (or Right click > Show More Options > Create Shortcut).
 
 3. Right click the shortcut you just created > Properties > Target. The target is the file path to your script. Paste the following text BEFORE the path to your script file:
 
@@ -31,15 +30,23 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 The icon of the shortcut may change to something like: 
 
-<img src="./imgs/ShortcutProperties.png" width="500">
+<img src="./imgs/ShortcutIcon.png" width="500">
 
 > If you move the script file to a new folder after creating the shortcut, you'll need to recreate the shortcut so it points to the file's new location. 
 
 ## Passing arguments to your script
 
-If the script you're creating a shortcut for requires certain arguments, paste them after the file path.
+Not all scripts require options aka arguments. The script's author/instructions should tell you if arguments are required.
 
-## -NoExit
+If the script you're creating a shortcut for requires certain arguments, paste them after the file path in the shortcut property target. Make sure there are spaces between them. 
 
-The `-NoExit` flag in the shorcut command tells Powershell to keep the terminal open after the script has finished. This might be useful in case there are error messages, or you'd like to check the script output before it closes. However, if you have a script that you know runs well and just want the terminal window to close automatically after the script completes, remove the -NoExit flag from the shortcut target.
+So you might end up with something like this (see options listed at the right hand end): 
+
+```
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -NoExit -File C:\Users\yourusername\path\to\script.ps1 -Option1 "some value" -Option2
+```
+
+## Automatically close the terminal window after the script completes
+
+The `-NoExit` flag in the shorcut command tells Powershell to keep the terminal open after the script has finished. This might be useful in case there are error messages, or you'd like to check the script output before it closes. However, if you have a script that you know runs well and just want the terminal window to close automatically after the script completes, remove the `-NoExit` option from the shortcut target.
 
