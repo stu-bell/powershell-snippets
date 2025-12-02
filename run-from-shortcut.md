@@ -1,16 +1,20 @@
-# Run Powershell scripts from a shortcut
+# Run Powershell scripts from a Windows Explorer shortcut
 
 These instructions detail how to create a Windows Explorer shortcut to launch Powershell scripts. 
 
 > RUNNING SCRIPTS CARRIES RISK. ALWAYS REVIEW SCRIPTS BEFORE RUNNING THEM ON YOUR SYSTEM.
 > IF IN DOUBT, COPY AND PASTE THE SCRIPT INTO A SERVICE LIKE CHATGPT AND ASK IF IT COULD BE HARMFUL.
 
+<img src="./imgs/ShortcutIcon.png" width="500">
+
+Your script will either be text that you copy and paste into a text file, or a file that you download. To make a shortcut to execute the script:
+
 1. Save your script as a file and ensure the file name ends with file extension .ps1
 If you can't see the file extension for file names, view them by following [these instructions](https://support.microsoft.com/en-gb/windows/common-file-name-extensions-in-windows-da4a4430-8e76-89c5-59f7-1cdbbc75cb01).
 
 2. Right click the powershell ps1 file in Windows Explorer > Create Shortcut (or Right click > Show More Options > Create Shortcut).
 
-3. Right click the shortcut you just created > Properties > Target. The target is the file path to your script. Paste the following text BEFORE the path to your script file:
+3. Right click the shortcut you just created > Properties > Target. The target is the file path to your script. Copy the following text and paste it BEFORE the path to your script file:
 
 ```
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -NoExit -File 
@@ -24,6 +28,7 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 > Note that there should be a space between -File and the start of your file path
 
+*Screenshot of the properties window, with the Target highlighted:*
 <img src="./imgs/ShortcutProperties.png" width="500">
 
 4. Clicking the shortcut you've just created will execute the script. Clicking the original script file will allow you to modify the script text. 
