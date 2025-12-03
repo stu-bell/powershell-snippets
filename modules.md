@@ -8,5 +8,5 @@ Add the comment at the top of the script:
 
 Running the script without the required modules available will cause an error and prevent the script from running.
 
-See [Microsoft Learn | About Requires](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about)requires?view=powershell-7.5&viewFallbackFrom=powershell-7.3_
+See [Microsoft Learn | About Requires](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_requires?view=powershell-7.5&viewFallbackFrom=powershell-7.3)
 
